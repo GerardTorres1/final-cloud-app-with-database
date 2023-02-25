@@ -69,24 +69,28 @@
         <div id="exam" class="collapse">
             {% if user.is_authenticated %}
             <form id="questionform" action="point to a submit view" method="post">
-                {% for question in course.question_set.all %}
+                {% for question in CourseDetailView.get_question %}
                 <div class="card mt-1">
                     <div class="card-header">
                         <h5>{{ question.question_text}}</h5>
                     </div>
                     {% csrf_token %}
                     <div class="form-group">
-                        {% for choice in question.choice_set.all %}
+                        {% for choice in CourseDetailView.get_choice %}
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input type="checkbox" name="choice_{{choice.id}}" class="form-check-input"
                                     id="{{choice.id}}" value="{{choice.id}}">{{ choice.choice_text }}
                             </label>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endfor %}
                 <input class="btn btn-success btn-block" type="submit" value="Submit">
             </form>
+
+            <h1>authenticated</h1>
             {% else %}
             <h1>Not authenticated</h1>
             {% endif %}

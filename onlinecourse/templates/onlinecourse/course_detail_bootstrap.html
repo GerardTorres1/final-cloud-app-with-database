@@ -53,8 +53,8 @@
                 <a href="#exam{{lesson.id}}" data-toggle="collapse" class="btn btn-primary btn-block">Start Exam</a>
                 <div id="exam{{lesson.id}}" class="collapse">
                     {% if user.is_authenticated %}
-                    <form id="questionform" action="point to a submit view" method="post">
-                        <h1>authenticated</h1>
+                    <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
+                        <!-- <h1>authenticated</h1> -->
                         {% for question in lesson.question_set.all %}
                         <div class="card mt-1">
                             <div class="card-header">
@@ -75,7 +75,6 @@
                         {% endfor %}
                         <input class="btn btn-success btn-block" type="submit" value="Submit">
                     </form>
-
                     {% else %}
                     <h1>Please login to take the exam</h1>
                     {% endif %}

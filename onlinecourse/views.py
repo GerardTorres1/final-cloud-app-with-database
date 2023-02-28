@@ -145,14 +145,22 @@ def show_exam_result(request, course_id, submission_id):
     submission = get_object_or_404(Submission, pk=submission_id)
     selected_choices = submission.choices.all()
     total_score = 0
+    num_score_choices = 0
 
     for choice in selected_choices:
         if choice.is_correct:
             total_score += choice.question.question_grade
+        else:
+            total_score -= choice.question.question_grade/2
 
-    grade = 0
+    for lesson in course.lesson_set.all():
+        for question in lesson.question_set.all():
+            for choice in question.choice_set.all():
+                if choice.is_correct:
+                    num_score_choices += choice.question.question_grade
+
     if len(selected_choices) > 0:
-        grade = total_score / len(selected_choices) * 100
+        grade = total_score / num_score_choices * 100
     context = {
         'course': course,
         'submission': submission,

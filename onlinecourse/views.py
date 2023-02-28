@@ -150,7 +150,7 @@ def show_exam_result(request, course_id, submission_id):
         if choice.is_correct:
             total_score += choice.question.question_grade
 
-
+    grade = 0
     if len(selected_choices) > 0:
         grade = total_score / len(selected_choices) * 100
     context = {
